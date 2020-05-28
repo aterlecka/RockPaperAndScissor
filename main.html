@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="styleForGame.css"/>
+    <script src="active.js"></script>
+    <script src="script.js"></script>
+
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        ::selection {
+            background: #fb9fe5;
+            text-shadow: none
+        }
+
+        a {
+            color: #0088CC;
+            text-decoration: none;
+            outline: 0
+        }
+
+        a:hover {
+            color: #005580
+        }
+
+        a img {
+            border: none
+        }
+
+        img {
+            max-width: 100%
+        }
+
+        html {
+            font-size: 100%
+        }
+
+        body {
+            padding: 5%;
+            font: 300 1.25em/1.6 monospace;
+            background: #fff;
+            color: #000;
+        }
+
+        h1 {
+            font-family: "Helvetica Neue", sans-serif;
+            line-height: 1;
+            font-weight: 300;
+            margin-bottom: 1em;
+        }
+
+        .game {
+            padding: 2em;
+            background: #eee;
+        }
+    </style>
+</head>
+<body>
+<div class="mainContainer">
+
+<h1>GAME: Paper rock and scissors!</h1>
+<h3>Choose one:</h3>
+
+<div class="container">
+
+
+    <div class="boxes">
+
+        <div class="background">
+            <img data-option="paper" src="paper.png" height="75%" width="75%">
+        </div>
+
+        <div class="background">
+            <img data-option="rock" src="rock.png" height="75%" width="75%">
+        </div>
+
+        <div class="background">
+            <img data-option="scissors" src="scissors.png" height="75%" width="75%">
+        </div>
+
+    </div>
+
+    <button id="paper" class="paper btn1" onclick="myFunction(paper)">paper</button>
+    <button id="rock" class="rock btn2" onclick="myFunction(rock)">rock</button>
+    <button id="scissors" class="scissors btn3" onclick="myFunction(scissors)">scissors</button>
+</div>
+
+
+<div class="players">
+    <div class="player1">PLAYER</div>
+    <div id="remis" class="remis"></div>
+    <div class="computer">COMPUTER</div>
+</div>
+
+<div class="symbols">
+    <div id="player1-symbol" class="player1">symbol</div>
+    <div id="computer-symbol" class="computer">symbol</div>
+</div>
+
+<div class="scores">
+    <div id="scorePlayer" class="scoreYou"></div>
+    <div id="scoreComputer" class="scoreComputer"></div>
+</div>
+
+
+
+    <button id="myBtn"  onclick="restart()">TRY AGAIN!</button>
+
+</div>
+<script>
+    let rock = document.getElementById("rock");
+    let paper = document.getElementById("paper");
+    let scissors = document.getElementById("scissors");
+    let countForPlayer = 0;
+    let countForComputer = 0;
+    let symbolForPlayer;
+    let symbolForComp;
+
+
+    function myFunction(symbol) {
+        const SYMBOLS = ['rock', 'paper', 'scissors'];
+        //Math random losuje zawsze od 0 do 0.999999
+
+        //losowanie komputera
+        let wylosowanyUlamek = Math.random() * SYMBOLS.length;
+        let zaokraglonyNumer = Math.floor(wylosowanyUlamek);
+        symbolForComp = SYMBOLS[zaokraglonyNumer];
+        symbolForPlayer = symbol.innerHTML;
+        console.log("COMPUTER", "=", symbolForComp);
+        console.log("PLAYER", "=", symbolForPlayer)
+
+
+        let winner = compareSymbols(symbolForPlayer, symbolForComp);
+        showMeResult(winner);
+    }
+
+    function showMeResult(win) {
+        if (win === undefined) {
+
+            document.getElementById("scorePlayer").innerHTML = countForPlayer;
+            document.getElementById('scoreComputer').innerHTML = countForPlayer;
+            document.getElementById('remis').innerHTML = "=";
+            alert("remis")
+
+        }
+
+        if (win === countForPlayer) {
+            document.getElementById("scorePlayer").innerHTML = countForPlayer;
+            document.getElementById('scoreComputer').innerHTML = countForComputer;
+        }
+
+        if (win === countForComputer) {
+            document.getElementById("scorePlayer").innerHTML = countForPlayer;
+            document.getElementById('scoreComputer').innerHTML = countForComputer;
+        }
+
+        document.getElementById("player1-symbol").innerHTML = symbolForPlayer;
+        document.getElementById('computer-symbol').innerHTML = symbolForComp;
+
+
+
+
+    }
+    function restart() {
+        countForComputer = 0;
+        countForPlayer = 0;
+
+        symbolForPlayer = 0;
+        symbolForComp = 0;
+
+        document.getElementById('scorePlayer').innerHTML = symbolForPlayer
+        document.getElementById('scoreComputer').innerHTML = symbolForComp;
+
+    }
+    function compareSymbols(symbol, symbolForComp) {
+        if (symbol === 'rock') {
+            if (symbolForComp === 'scissors') {
+                countForPlayer += 1;
+                return countForPlayer
+            }
+            if (symbolForComp === 'rock') {
+                return;
+            }
+            if (symbolForComp === 'paper') {
+                countForComputer += 1;
+                return countForComputer
+            }
+        }
+
+        if (symbol === 'scissors') {
+            if (symbolForComp === 'scissors') {
+                return;
+            }
+            if (symbolForComp === 'rock') {
+                countForComputer += 1;
+                return countForComputer
+            }
+            if (symbolForComp === 'paper') {
+                countForPlayer += 1;
+                return countForPlayer
+            }
+        }
+
+        if (symbol === 'paper') {
+            if (symbolForComp === 'scissors') {
+                countForComputer += 1;
+                return countForComputer
+            }
+            if (symbolForComp === 'rock') {
+                countForPlayer += 1;
+                return countForPlayer
+            }
+            if (symbolForComp === 'paper') {
+                return;
+            }
+        }
+    }
+
+
+
+</script>
+</body>
+</html>
