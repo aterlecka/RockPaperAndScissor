@@ -1,9 +1,9 @@
 #Game: rock, paper and scissor
 
 ## General info
-* game for 2 players - VS computer user
+* game for 1 player - player VS computer 
 
- * each player at the same time chooses one of the symbols
+ *  player and computer chooses one of the symbols  at the same time
  
  * there are 3 symbols - stone, paper and scissors
  
